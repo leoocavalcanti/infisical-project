@@ -1,0 +1,18 @@
+include:
+  - path: infisical/docker-compose.yml
+    env_file: infisical/.env
+
+services:
+  nest-app:
+    build:
+      context: ./nest-app
+    container_name: nest-app
+    restart: unless-stopped
+    depends_on:
+      - infisical
+    ports:
+      - "3003:3000"
+    env_file:
+      - .env.nest
+    networks:
+      - infisical

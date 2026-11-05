@@ -1,0 +1,20 @@
+# Secrets e envs (ficam locais)
+.env
+.env.*
+!.env.example
+!.env.*.example
+infisical/.env
+.env.nest
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
