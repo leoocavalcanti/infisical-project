@@ -70,7 +70,8 @@ Use o script auxiliar da raiz:
 ./dev.sh down          # para tudo (preserva dados)
 ./dev.sh restart       # reinicia nest-app após mudar secret
 ./dev.sh logs          # tail do nest-app
-./dev.sh destroy       # down + apaga volume (reset total)
+./dev.sh destroy       # down + apaga dados (reset de config do Infisical)
+./dev.sh clean         # destroy + remove TODAS as imagens baixadas
 ./dev.sh help          # lista comandos
 ```
 
@@ -111,7 +112,8 @@ Resposta esperada:
 ## Limpar
 
 ```bash
-./dev.sh destroy   # apaga volume do Postgres (perde a config do Infisical)
+./dev.sh destroy   # apaga infisical/data/ (perde a config do Infisical)
+./dev.sh clean     # acima + remove imagens (infisical, postgres, redis, node, nest-app)
 ```
 
 ## Resumo de comandos

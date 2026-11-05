@@ -57,6 +57,16 @@ case "$cmd" in
       echo "✓ containers e dados removidos"
     fi
     ;;
+  clean)
+    read -p "⚠  limpeza total: containers + dados + imagens (infisical, postgres:14-alpine, redis:7-alpine, node:22-alpine, nest-app). continuar? [y/N] " ans
+    if [ "$ans" = "y" ] || [ "$ans" = "Y" ]; then
+      docker compose down --rmi all --remove-orphans || true
+      rm -rf infisical/data
+      # imagem base usada no build do nest-app (não é referenciada no compose)
+      docker rmi node:22-alpine 2>/dev/null || true
+      echo "✓ clean total — próximo ./dev.sh up vai re-baixar e re-buildar tudo"
+    fi
+    ;;
   restart)
     docker compose restart nest-app
     echo "✓ nest-app reiniciado — secrets recarregados"
@@ -75,7 +85,8 @@ Comandos:
   up            sobe tudo (Infisical + nest-app)
   up:infisical  sobe só o Infisical (pra fazer setup inicial na UI)
   down          para containers (preserva volumes)
-  destroy       down + apaga volumes (reset completo)
+  destroy       down + apaga infisical/data (reset de dados)
+  clean         destroy + remove TODAS as imagens que baixamos (reset total)
   restart       reinicia só o nest-app (usar após mudar secret na UI)
   logs [svc]    tail nos logs (default: nest-app)
   status        lista containers
