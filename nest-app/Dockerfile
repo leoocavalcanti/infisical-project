@@ -1,9 +1,14 @@
 FROM node:22-alpine
 
-# Infisical CLI
-RUN apk add --no-cache bash curl \
- && curl -1sLf 'https://artifacts-cli.infisical.com/setup.alpine.sh' | bash \
- && apk add --no-cache infisical
+# Infisical CLI (binário direto do GitHub releases, multi-arch)
+ARG TARGETARCH
+ARG INFISICAL_VERSION=0.45.0
+RUN apk add --no-cache bash curl ca-certificates \
+ && curl -fsSL "https://github.com/Infisical/cli/releases/download/v${INFISICAL_VERSION}/cli_${INFISICAL_VERSION}_linux_${TARGETARCH}.tar.gz" -o /tmp/infisical.tar.gz \
+ && tar -xzf /tmp/infisical.tar.gz -C /usr/local/bin infisical \
+ && chmod +x /usr/local/bin/infisical \
+ && rm /tmp/infisical.tar.gz \
+ && infisical --version
 
 WORKDIR /app
 
@@ -15,10 +20,11 @@ COPY src ./src
 RUN npm run build
 
 # Config "estática" do projeto (não é secret) - edite após criar o projeto no Infisical UI
-ENV INFISICAL_API_URL=http://infisical:8080
+# Nomes usados pelo próprio CLI: INFISICAL_DOMAIN, INFISICAL_PROJECT_ID, INFISICAL_ENVIRONMENT
+ENV INFISICAL_DOMAIN=http://infisical:8080
 ENV INFISICAL_PROJECT_ID=REPLACE_WITH_PROJECT_ID
 ENV INFISICAL_ENVIRONMENT=dev
 
-# CLIENT_ID e CLIENT_SECRET vêm em runtime via env_file (nunca no Dockerfile)
+# INFISICAL_UNIVERSAL_AUTH_CLIENT_ID/SECRET vêm em runtime via env_file — o CLI lê direto das env vars
 EXPOSE 3000
-CMD ["sh", "-c", "infisical run --projectId=$INFISICAL_PROJECT_ID --env=$INFISICAL_ENVIRONMENT --domain=$INFISICAL_API_URL --token=$(infisical login --method=universal-auth --client-id=$INFISICAL_CLIENT_ID --client-secret=$INFISICAL_CLIENT_SECRET --domain=$INFISICAL_API_URL --silent --plain) -- node dist/main.js"]
+CMD ["sh", "-c", "infisical run --token=$(infisical login --method=universal-auth --silent --plain) -- node dist/main.js"]

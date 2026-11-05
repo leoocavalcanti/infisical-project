@@ -52,6 +52,12 @@ services:
       REDIS_URL: redis://infisical-redis:6379
     networks:
       - infisical
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/api/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
 networks:
   infisical:

@@ -9,10 +9,17 @@ services:
     container_name: nest-app
     restart: unless-stopped
     depends_on:
-      - infisical
+      infisical:
+        condition: service_healthy
     ports:
       - "3003:3000"
     env_file:
       - .env.nest
     networks:
       - infisical
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s

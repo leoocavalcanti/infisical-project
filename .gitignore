@@ -6,6 +6,9 @@
 infisical/.env
 .env.nest
 
+# Dados do Postgres (bind mount local)
+infisical/data/
+
 # Node
 node_modules/
 dist/
