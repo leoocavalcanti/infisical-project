@@ -10,7 +10,7 @@ services:
     ports:
       - "5437:5432"
     volumes:
-      - infisical-db-data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     networks:
       - infisical
     healthcheck:
@@ -52,9 +52,6 @@ services:
       REDIS_URL: redis://infisical-redis:6379
     networks:
       - infisical
-
-volumes:
-  infisical-db-data:
 
 networks:
   infisical:

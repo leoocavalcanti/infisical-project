@@ -50,9 +50,11 @@ case "$cmd" in
     docker compose down
     ;;
   destroy)
-    read -p "⚠  isso apaga o volume do Postgres (perde a config do Infisical). continuar? [y/N] " ans
+    read -p "⚠  isso apaga infisical/data/ (perde a config do Infisical). continuar? [y/N] " ans
     if [ "$ans" = "y" ] || [ "$ans" = "Y" ]; then
-      docker compose down -v
+      docker compose down
+      rm -rf infisical/data
+      echo "✓ containers e dados removidos"
     fi
     ;;
   restart)
