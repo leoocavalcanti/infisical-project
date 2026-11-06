@@ -4,8 +4,7 @@ export interface StatusResponse {
   welcomeMessage: string;
   apiKey: string;
   featureFlagBeta: boolean;
-  betaFeatureState: string;
-  readAt: string;
+  isAdmin: string | null;
 }
 
 @Injectable()
@@ -17,12 +16,15 @@ export class AppService {
 
     const featureFlagBeta = process.env.FEATURE_FLAG_BETA === 'true';
 
+    const flagAdmin = process.env.NODE_ENV;
+
+    const userType = flagAdmin ? `Você é administrador` : `Você é usuário`;
+
     return {
       welcomeMessage: process.env.WELCOME_MESSAGE ?? 'not-set',
       apiKey: maskedApiKey,
       featureFlagBeta,
-      betaFeatureState: featureFlagBeta ? 'Beta features ON' : 'Beta features OFF',
-      readAt: new Date().toISOString(),
+      isAdmin: flagAdmin ? userType : null,
     };
   }
 }
