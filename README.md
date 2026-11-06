@@ -126,3 +126,11 @@ Resposta esperada:
   - ./dev.sh restart — reinicia só o nest-app (pós-mudança de secret)
   - ./dev.sh logs [svc] — tail de logs
   - ./dev.sh status — lista containers
+
+
+## Testar Secret - Identitiy Machine Infisical
+
+  curl -s -X POST http://localhost:8080/api/v1/auth/universal-auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"clientId":"<id>","clientSecret":"<secret>"}' \
+    | jq
