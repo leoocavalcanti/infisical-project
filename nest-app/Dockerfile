@@ -19,8 +19,6 @@ COPY tsconfig*.json nest-cli.json ./
 COPY src ./src
 RUN npm run build
 
-# Config "estática" do projeto (não é secret) - edite após criar o projeto no Infisical UI
-# Nomes usados pelo próprio CLI: INFISICAL_DOMAIN, INFISICAL_PROJECT_ID, INFISICAL_ENVIRONMENT
 ENV INFISICAL_DOMAIN=http://infisical:8080
 ENV INFISICAL_PROJECT_ID=cd8e4ff1-5b9d-4a42-941e-5952e64f77ad
 ENV INFISICAL_ENVIRONMENT=dev
