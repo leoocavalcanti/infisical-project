@@ -22,7 +22,7 @@ RUN npm run build
 # Config "estática" do projeto (não é secret) - edite após criar o projeto no Infisical UI
 # Nomes usados pelo próprio CLI: INFISICAL_DOMAIN, INFISICAL_PROJECT_ID, INFISICAL_ENVIRONMENT
 ENV INFISICAL_DOMAIN=http://infisical:8080
-ENV INFISICAL_PROJECT_ID=REPLACE_WITH_PROJECT_ID
+ENV INFISICAL_PROJECT_ID=321dc6e8-87f3-42d5-8ed6-f6b32de2285b
 ENV INFISICAL_ENVIRONMENT=dev
 
 # INFISICAL_UNIVERSAL_AUTH_CLIENT_ID/SECRET vêm em runtime via env_file — o CLI lê direto das env vars

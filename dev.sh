@@ -69,7 +69,7 @@ case "$cmd" in
     ;;
   restart)
     docker compose restart nest-app
-    echo "✓ nest-app reiniciado — secrets recarregados"
+    echo "✓ nest-app reiniciado — secrets do Infisical recarregados"
     ;;
   logs)
     docker compose logs -f "${2:-nest-app}"
