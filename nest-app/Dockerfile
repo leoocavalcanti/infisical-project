@@ -2,7 +2,7 @@ FROM node:22-alpine
 
 # Infisical CLI (binário direto do GitHub releases, multi-arch)
 ARG TARGETARCH
-ARG INFISICAL_VERSION=0.44.15
+ARG INFISICAL_VERSION=0.45.0
 RUN apk add --no-cache bash curl ca-certificates \
  && curl -fsSL "https://github.com/Infisical/cli/releases/download/v${INFISICAL_VERSION}/cli_${INFISICAL_VERSION}_linux_${TARGETARCH}.tar.gz" -o /tmp/infisical.tar.gz \
  && tar -xzf /tmp/infisical.tar.gz -C /usr/local/bin infisical \

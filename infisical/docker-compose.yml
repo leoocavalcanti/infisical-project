@@ -34,7 +34,7 @@ services:
       retries: 10
 
   infisical:
-    image: infisical/infisical:latest-postgres
+    image: infisical/infisical:v0.167.6
     container_name: infisical
     restart: unless-stopped
     depends_on:
